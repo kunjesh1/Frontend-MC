@@ -1,0 +1,12 @@
+.box {
+  padding: 20px;
+  border: 1px solid black;
+  margin: 5px;
+}
+
+.image-box {
+  border: 1px solid black;
+  height: 400px;
+  width: 70%;
+  margin: 20px;
+}
