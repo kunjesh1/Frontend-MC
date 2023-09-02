@@ -34,3 +34,22 @@
 .text-left {
   text-align: left;
 }
+
+.flex-container {
+  display: flex;
+  flex-wrap: wrap-reverse; /* Allow items to wrap */
+  gap: 20px; /* Gap between flex items */
+}
+
+/* Style for flex items */
+.flex-item {
+  flex: 2; /* Distribute available space equally among flex items */
+  min-width: 300px; /* Minimum width for the first item */
+  padding: 20px;
+}
+
+/* Customize the width of the second item */
+.flex-item:nth-child(2) {
+  flex: 1; /* Twice the width of other items */
+  min-width: auto;
+}

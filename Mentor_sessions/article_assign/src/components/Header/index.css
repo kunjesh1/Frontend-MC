@@ -1,0 +1,27 @@
+.nav-container {
+  display: flex;
+  flex-direction: column; /* Stack items vertically */
+  gap: 20px; /* Gap between flex items */
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  margin: 5px;
+}
+
+/* Sub-container for items */
+.items-container {
+  display: flex;
+  justify-content: space-between; /* Distribute items between start and end */
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+/* Style for flex items */
+.nav-item {
+  min-width: 200px;
+  padding: 5px;
+  box-sizing: border-box;
+}
+
+.nav-item:last-child {
+  align-self: flex-end;
+}

@@ -8,13 +8,18 @@ const StarRating = (props) => {
   return (
     <div className="flex align-center">
       <span>Rate this article</span>
+      {/* do check for the max value and error handling */}
       {Array.from({ length: max }).map((_, i) => {
+        {
+          /*  don't use anonymous function */
+        }
         return (
           <span
             onMouseEnter={() => setHoveredIndex(i)}
             onMouseLeave={() => setHoveredIndex(null)}
             onClick={() => onChange(i)}
           >
+            {/* named function highlightstar */}
             <Star
               filled={hoveredIndex != null ? i <= hoveredIndex : i <= value}
             />
@@ -25,6 +30,7 @@ const StarRating = (props) => {
   );
 };
 
+// Can i use 1,2,3 get the svg of this
 const Star = ({ filled }) => {
   return (
     <svg

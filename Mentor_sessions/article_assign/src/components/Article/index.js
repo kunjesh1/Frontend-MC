@@ -7,6 +7,7 @@ const Article = (props) => {
   const { article } = props;
   const [rating, setRating] = useState(0);
 
+  // check if rating is 0 , right now it is setting as undefined
   useEffect(() => {
     setRating(article?.rating);
   }, [article?.rating]);
@@ -18,9 +19,13 @@ const Article = (props) => {
       </div>
       <div>{article?.description}</div>
       <div className="image-box" />
-      <div className="flex align-center space-between w-full">
-        <Tag tags={article?.tags} />
-        <StarRating value={rating} onChange={setRating} max={5} />
+      <div className="flex-container align-center space-between w-full">
+        <div className="flex-item">
+          <Tag tags={article?.tags} />
+        </div>
+        <div className="flex-item">
+          <StarRating value={rating} onChange={setRating} max={5} />
+        </div>
       </div>
     </div>
   );
