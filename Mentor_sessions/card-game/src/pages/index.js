@@ -9,19 +9,21 @@ const CardGame = () => {
   const { generateCards, reset } = api;
 
   return (
-    <div className="margin-auto">
+    <main className="container">
       <h2>Card Game</h2>
       <div>Click on Button to generate 5 random cards</div>
       <button onClick={generateCards}>Get cards</button>
-      <div className="flex">
-        {randomCards &&
+      <section className="flex cards">
+        {!!randomCards &&
           randomCards.map((card) => {
             return <Card src={card?.image} label={card.label} />;
           })}
-      </div>
-      <button onClick={reset}>Restart</button>
+      </section>
+      <footer>
+        <button onClick={reset}>Restart</button>
+      </footer>
       <div className="">Total Pulled : {count}</div>
-    </div>
+    </main>
   );
 };
 

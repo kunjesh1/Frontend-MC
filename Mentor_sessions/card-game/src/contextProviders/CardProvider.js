@@ -21,13 +21,14 @@ function getRandomIntInclusive(min, max) {
 }
 
 export default function CardProvider({ children }) {
+  // action
   const reducer = (state, action) => {
     console.log({ state, action });
     switch (action.type) {
       case "GENERATE_CARDS": {
         if (state.count >= 50) {
           window.alert("Game ended");
-          return;
+          return state; // Default state should be returned
         }
         const cards = [...state.cardsArray];
         const randomCards = [...state.randomCards];
