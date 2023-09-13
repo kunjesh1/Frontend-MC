@@ -1,7 +1,6 @@
 import { BASE_URL } from "./constants.js";
 
 const fetchAndAppendTODO = async ($el, onSuccess, onError) => {
-  console.log({ BASE_URL });
   try {
     const response = await fetch(BASE_URL);
     const responseJSON = await response.json();

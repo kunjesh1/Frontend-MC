@@ -38,22 +38,28 @@ class DOMManipulator {
     const onSuccess = (response) => {
       this.createCard($sectionEl, response);
     };
+
+    let tooltipLabel;
     // Logic for debouncing and throttling
     switch (type) {
       case "normal":
         handleClick = () => fetchAndAppendTODO($sectionEl, onSuccess);
+        tooltipLabel = "normally";
+
         break;
       case "debounced":
         handleClick = this.debounce(
           () => fetchAndAppendTODO($sectionEl, onSuccess),
           1500
         );
+        tooltipLabel = "debounced";
         break;
       case "throttled":
         handleClick = this.throttle(
           () => fetchAndAppendTODO($sectionEl, onSuccess),
           1500
         );
+        tooltipLabel = "throttled";
         break;
     }
 
@@ -61,7 +67,8 @@ class DOMManipulator {
 
     $divEl.appendChild($pEl);
     $divEl.appendChild($buttonEl);
-    this.arrowIndicator($divEl, "This is called directly");
+
+    this.arrowIndicator($divEl, `This is called ${tooltipLabel}`);
 
     $sectionEl.appendChild($divEl);
   }
