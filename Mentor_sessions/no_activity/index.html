@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inactivity Warning</title>
+    <style>
+      .modal {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 20px;
+        background-color: #fff;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="modal" id="warning-modal">
+      <h2>Warning: Inactivity</h2>
+      <p>
+        Your session will expire due to inactivity. Please move the mouse or
+        press a key to continue.
+      </p>
+    </div>
+
+    <script src="index.js"></script>
+  </body>
+</html>

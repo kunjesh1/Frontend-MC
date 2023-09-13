@@ -1,101 +1,107 @@
-(() => {
-  function initialize() {
-    const $normalSection = document.querySelector("#normal");
-    const $debounceSection = document.querySelector("#debouncing");
-    const $throttleSection = document.querySelector("#throttling");
+import { createElement, fetchAndAppendTODO } from "./modules/libs.js";
 
-    createSection($normalSection, "normal", "Normal");
-    createSection($debounceSection, "debounced", "Debounced");
-    createSection($throttleSection, "throttled", "Throttled");
+class DOMManipulator {
+  constructor() {
+    this.normalSection = document.querySelector("#normal");
+    this.debounceSection = document.querySelector("#debouncing");
+    this.throttleSection = document.querySelector("#throttling");
   }
 
-  function arrowIndicator($el, label) {
-    const $wrapperDivEl = document.createElement("div");
-    const $divEl = document.createElement("div");
-    const $arrowLeft = document.createElement("div");
+  initialize() {
+    this.createSection(this.normalSection, "normal", "Normal");
+    this.createSection(this.debounceSection, "debounced", "Debounced");
+    this.createSection(this.throttleSection, "throttled", "Throttled");
+  }
 
-    // classes
-    $wrapperDivEl.classList.add("wrapper");
-    $divEl.classList.add("text-label");
-    $arrowLeft.classList.add("arrow-left");
+  arrowIndicator($el, label) {
+    const $wrapperDivEl = createElement("div", { class: "wrapper" });
+    const $divEl = createElement("div", { class: "text-label" });
+    const $arrowLeft = createElement("div", { class: "arrow-left" });
 
-    $wrapperDivEl.append($arrowLeft);
-    $wrapperDivEl.append($divEl);
+    $wrapperDivEl.appendChild($arrowLeft);
+    $wrapperDivEl.appendChild($divEl);
     $divEl.textContent = label;
 
-    $el.append($wrapperDivEl);
+    $el.appendChild($wrapperDivEl);
   }
-  function createSection($sectionEl, type, label) {
-    const $divEl = document.createElement("div");
-    const $pEl = document.createElement("p");
 
+  createSection($sectionEl, type, label) {
+    const $divEl = createElement("div", { class: "flex" });
+    const $pEl = createElement("p");
     $pEl.textContent = `${label} counter`;
 
-    const $buttonEl = document.createElement("BUTTON");
-
+    const $buttonEl = createElement("button");
     $buttonEl.innerText = "Get Products";
-
-    console.log("Inside section", this);
 
     let handleClick = () => {};
 
+    const onSuccess = (response) => {
+      this.createCard($sectionEl, response);
+    };
     // Logic for debouncing and throttling
     switch (type) {
       case "normal":
-        handleClick = () => fetchAndAppendTODO($sectionEl);
+        handleClick = () => fetchAndAppendTODO($sectionEl, onSuccess);
         break;
       case "debounced":
-        handleClick = debounce(() => fetchAndAppendTODO($sectionEl), 1500);
+        handleClick = this.debounce(
+          () => fetchAndAppendTODO($sectionEl, onSuccess),
+          1500
+        );
         break;
       case "throttled":
-        handleClick = throttle(() => fetchAndAppendTODO($sectionEl), 1500);
+        handleClick = this.throttle(
+          () => fetchAndAppendTODO($sectionEl, onSuccess),
+          1500
+        );
         break;
     }
 
     $buttonEl.addEventListener("click", handleClick);
 
-    $divEl.classList.add("flex");
-    $divEl.append($pEl);
-    $divEl.append($buttonEl);
-    arrowIndicator($divEl, "This is called directly");
+    $divEl.appendChild($pEl);
+    $divEl.appendChild($buttonEl);
+    this.arrowIndicator($divEl, "This is called directly");
 
-    $sectionEl.append($divEl);
+    $sectionEl.appendChild($divEl);
   }
 
-  function createCard($el, products) {
-    const $ul = document.createElement("ul");
+  createCard($el, products) {
+    const $ul = createElement("ul");
 
     if (products && products.length == 0) {
       return;
     }
-    products.map((product) => {
-      console.log({ product });
-      const $li = document.createElement("li");
-      const $productTitle = document.createElement("h4");
-      const $productDescription = document.createElement("p");
-      const $productCategory = document.createElement("p");
 
-      $productTitle.textContent = product?.title;
-      $productDescription.textContent = product?.description;
-      $productCategory.textContent = product?.category;
+    products.forEach((product) => {
+      const $li = createElement("li", { class: "card" });
+      const $productTitle = createElement(
+        "h4",
+        { class: "title" },
+        product?.title
+      );
+      const $productDescription = createElement(
+        "p",
+        { class: "description" },
+        product?.description
+      );
+      const $productCategory = createElement(
+        "p",
+        { class: "category" },
+        product?.category
+      );
 
-      //add classes
-      $productTitle.classList.add("title");
-      $productDescription.classList.add("description");
+      $li.appendChild($productTitle);
+      $li.appendChild($productCategory);
+      $li.appendChild($productDescription);
 
-      $li.append($productTitle);
-      $li.append($productDescription);
-      $li.append($productCategory);
-
-      $li.classList.add("card");
-
-      $ul.append($li);
+      $ul.appendChild($li);
     });
 
-    $el.append($ul);
+    $el.appendChild($ul);
   }
 
-  function throttle(callbackFn, delay) {
+  throttle(callbackFn, delay) {
     let shouldThrottle = true;
 
     return function (...args) {
@@ -111,7 +117,7 @@
     };
   }
 
-  function debounce(callbackFn, delay) {
+  debounce(callbackFn, delay) {
     const ctx = this;
     let debounceTime;
 
@@ -124,19 +130,7 @@
       }, delay);
     };
   }
+}
 
-  async function fetchAndAppendTODO($el) {
-    try {
-      const response = await fetch("https://fakestoreapi.com/products?limit=3");
-      const responseJSON = await response.json();
-
-      createCard($el, responseJSON);
-
-      console.log({ responseJSON });
-    } catch (err) {
-      console.log({ err });
-    }
-  }
-
-  initialize();
-})();
+const domManipulator = new DOMManipulator();
+domManipulator.initialize();

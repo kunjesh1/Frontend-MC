@@ -1,0 +1,15 @@
+.column-view {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  column-count: 3;
+  column-gap: 20px;
+}
+
+.column-view img {
+  width: 100%;
+  display: block;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  transition: transform 0.3s ease-in-out;
+}
