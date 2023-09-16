@@ -133,7 +133,7 @@ class DOMManipulator {
         clearTimeout(debounceTime);
       }
       debounceTime = setTimeout(() => {
-        callbackFn.apply(ctx, [...args]);
+        callbackFn(ctx, [...args]);
       }, delay);
     };
   }
