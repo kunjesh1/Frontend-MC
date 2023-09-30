@@ -19,6 +19,7 @@ constructor(executor) {
 
 then(onFullfilled, onRejected) {
     return new MyPromise((resolve, reject) => {
+        queueMicrotask(() => {
         this._fullfilledCallbacks.push(value => {
             try {
                 resolve(onFullfilled(value));
@@ -33,7 +34,7 @@ then(onFullfilled, onRejected) {
             } catch (error) {
                 reject(error);
             }
-        });
+        })});
 
         switch (this._state) {
             case STATE.PENDING:
