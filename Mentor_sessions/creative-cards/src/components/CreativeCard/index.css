@@ -1,0 +1,12 @@
+.creative-card {
+  color: white;
+  min-width: 100px;
+  margin: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.circle {
+  border-radius: 100%;
+}
